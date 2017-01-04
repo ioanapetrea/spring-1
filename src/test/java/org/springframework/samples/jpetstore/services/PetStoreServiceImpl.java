@@ -1,5 +1,7 @@
 package org.springframework.samples.jpetstore.services;
 
+import java.beans.ConstructorProperties;
+
 import org.springframework.samples.jpetstore.dao.AccountDao;
 import org.springframework.samples.jpetstore.dao.ItemDao;
 
@@ -10,7 +12,7 @@ public class PetStoreServiceImpl {
 	private int year;//构造函数中添加默认值（通过构造函数注入）
 	private int count;
 	private String samename;
-	
+//	@ConstructorProperties({"year", "count","samename","itemDao"})
 	public PetStoreServiceImpl(int year,int count,String samename,ItemDao itemDao) {
 		this.itemDao = itemDao;
 		this.year=year;
