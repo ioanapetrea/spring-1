@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 对petStore使用别名 在得到 org.springframework.samples.jpetstore.services.PetStoreServiceImpl这个bean的时候
+	petStore，petStoreAlias这两个名字都代表上面的bean
+-->
+<alias name="petStore" alias="petStoreAlias"/>
+<alias name="petStore" alias="petStoreAlias1"/><!-- 别名可以有多个 -->
+<bean name="petStore" class="org.springframework.samples.jpetstore.services.PetStoreServiceImpl">
+    <constructor-arg ref="itemDao"></constructor-arg>
+	<property name="accountDao" ref="accountDao"></property>
+</bean>
+
+</beans>
