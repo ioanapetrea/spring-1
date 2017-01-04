@@ -15,8 +15,12 @@ public class springIOCTest {
 		@SuppressWarnings("resource")
 		ApplicationContext context=new ClassPathXmlApplicationContext(new String[]{"services.xml","daos.xml"});
 		PetStoreServiceImpl services = context.getBean("petStoreAlias1",PetStoreServiceImpl.class);
-//		services.petToAccountDao();//测试set方法注入
+		services.petToAccountDao();//测试set方法注入
 		services.petToItemDao();//测试构造器注入
+		services.getYear();//测试在构造函数中添加默认值
+		services.getCount();//测试在构造函数中添加默认值（方法二）
+		services.getSamename();
+		
 	}
 
 }

@@ -11,6 +11,9 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 <alias name="petStore" alias="petStoreAlias1"/><!-- 别名可以有多个 -->
 <bean name="petStore" class="org.springframework.samples.jpetstore.services.PetStoreServiceImpl">
     <constructor-arg ref="itemDao"></constructor-arg>
+    <constructor-arg type="int" value="2"></constructor-arg>
+     <constructor-arg index="0" value="2017"></constructor-arg>
+      <constructor-arg name="samename" value="为了防止构造函数中有两个一样类型的参数，采用name进行区分"></constructor-arg>
 	<property name="accountDao" ref="accountDao"></property>
 </bean>
 
