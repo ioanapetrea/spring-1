@@ -76,7 +76,7 @@ p:spouse-ref="jane"/>
 </bean>
 -->
 <!-- 另外一种写法 采用 java.util.Properties-->
-<bean id="mappings"
+<bean  id="mappings"
 class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 <!-- typed as a java.util.Properties -->
 <property name="properties">
@@ -127,4 +127,11 @@ is thrown.
     <beans default-lazy-init="true">
 </beans>
     -->
+    
+    <!-- 自动装配  autowire="" 解释见4.3.5官方文档93页 -->
+    <bean id="autowirePetStore" class="org.springframework.samples.jpetstore.services.AutowirePetStoreServiceImpl" autowire="byType"></bean>
+    
+    <!-- lookup-method标签  解释：表示在一个单例bean中引入一个非单例bean时需要使用-->
+
+   <!-- replaced-method 可以在运行时用新的方法替换旧的方法 -->
 </beans>
