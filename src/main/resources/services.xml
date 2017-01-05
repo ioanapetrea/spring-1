@@ -134,4 +134,11 @@ is thrown.
     <!-- lookup-method标签  解释：表示在一个单例bean中引入一个非单例bean时需要使用-->
 
    <!-- replaced-method 可以在运行时用新的方法替换旧的方法 -->
+   
+   <!-- bean scope  bean的范围
+    <bean scope=""/> 4.3.5官方文档中指出有七种域
+    但是在本项目中只要四种 request，session，singleton,prototype
+   -->
+   
+   <!-- destroy-method init-method 相当于自定义bean实现 InitializingBean或者DisposableBean接口-->
 </beans>
