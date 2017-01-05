@@ -9,12 +9,65 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 -->
 <alias name="petStore" alias="petStoreAlias"/>
 <alias name="petStore" alias="petStoreAlias1"/><!-- 别名可以有多个 -->
-<bean name="petStore" class="org.springframework.samples.jpetstore.services.PetStoreServiceImpl">
+<!-- 通过static方法注入 如下即可
+	如果是一个静态方法注入的话就需要在
+	<bean id="exampleBean" class="examples.ExampleBean" factory-method="createInstance">
+<constructor-arg ref="anotherExampleBean"/>
+<constructor-arg ref="yetAnotherBean"/>
+<constructor-arg value="1"/>
+</bean>
+<bean id="anotherExampleBean" class="examples.AnotherBean"/>
+<bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
+		public static ExampleBean createInstance (
+					AnotherBean anotherBean, YetAnotherBean yetAnotherBean, int i) {
+					ExampleBean eb = new ExampleBean (...);
+					// some other operations...
+					return eb;
+				}
+-->
+<!-- 通过setter或者构造器方法注入 如下即可 -->
+<bean name="petStore"  class="org.springframework.samples.jpetstore.services.PetStoreServiceImpl">
     <constructor-arg ref="itemDao"></constructor-arg>
     <constructor-arg type="int" value="2"></constructor-arg>
      <constructor-arg index="0" value="2017"></constructor-arg>
+     <!-- 推荐使用name的方式来进行构造器注入 -->
       <constructor-arg name="samename" value="为了防止构造函数中有两个一样类型的参数，采用name进行区分"></constructor-arg>
-	<property name="accountDao" ref="accountDao"></property>
+	<!-- 通过setter方法注入 方法一-->
+	<!-- <property name="accountDao" ref="accountDao"></property> -->
+	<!-- 通过setter方法注入 方法二-->
+	<property name="accountDao">
+		<!-- <ref/> 
+		ref有三个属性：local、parent、bean，具体区别如下：（官方文档上给出三个，实际上在本配置文件中local不可使用，推荐使用bean属性）
+	local只能指定与当前配置的对象在同一个配置文件的对象定义的名称；
+	parent则只能指定位于当前容器的父容器中定义的对象引用；
+	bean则基本上通吃，所以，通吃情况下，直接使用bean来指定对象引用就可以了。
+		 -->
+		<ref  bean="accountDao"/>
+	</property>
 </bean>
-
+<!-- P标签的用法 
+<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+<property name="url" value="jdbc:mysql://localhost:3306/mydb"/>
+<property name="username" value="root"/>
+<property name="password" value="masterkaoli"/>
+</bean>-->
+<!-- p标签写法 
+<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+destroy-method="close"
+p:driverClassName="com.mysql.jdbc.Driver"
+p:url="jdbc:mysql://localhost:3306/mydb"
+p:username="root"
+p:password="root"/>-->
+<!-- 另外一种写法 采用 java.util.Properties-->
+<bean id="mappings"
+class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<!-- typed as a java.util.Properties -->
+<property name="properties">
+<value>
+jdbc.driver.className=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/mydb
+</value>
+</property>
+</bean>
 </beans>

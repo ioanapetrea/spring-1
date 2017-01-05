@@ -7,7 +7,7 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>Dmm_xg Web Application</name>
+  <name>spring Web Application</name>
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -118,18 +118,21 @@
     	<version>2.0</version>
     	<scope>provided</scope>
     </dependency>
-   <!--  <dependency>
+     <dependency>
     	<groupId>javax.servlet</groupId>
     	<artifactId>jstl</artifactId>
     	<version>1.2</version>
 	</dependency>
-    
-    <dependency>  
-        <groupId>org.jasig.cas.client</groupId>  
-        <artifactId>cas-client-core</artifactId>  
-        <version>3.2.1</version>  
-    </dependency>  
-     -->
+     	<dependency>
+	    <groupId>org.apache.commons</groupId>
+	    <artifactId>commons-lang3</artifactId>
+	    <version>3.4</version>
+	</dependency>
+		<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-collections4</artifactId>
+    <version>4.0</version>
+    </dependency>
   </dependencies>
   
   <build>
