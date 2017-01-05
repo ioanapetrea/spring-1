@@ -86,6 +86,8 @@ jdbc.url=jdbc:mysql://localhost:3306/mydb
 </value>
 </property>
 </bean>
+
+
 <!-- c-namespace 是针对<constructor-arg/>标签的一个简写
 <bean id="bar" class="x.y.Bar"/>
 <bean id="foo" class="x.y.Foo">
@@ -96,6 +98,8 @@ jdbc.url=jdbc:mysql://localhost:3306/mydb
 
 <bean id="foo" class="x.y.Foo" c:bar-ref="bar" c:baz-ref="baz" c:email="foo@bar.com"/>
  -->
+ 
+ 
  <!-- 嵌套属性
  <bean id="foo" class="foo.Bar">
 <property name="fred.bob.sammy" value="123" />
@@ -106,6 +110,9 @@ sammy property is being set to the value 123. In order for this to work, the fre
 bob property of fred must not be null after the bean is constructed, or a NullPointerException
 is thrown.
   -->
+  
+  
+  
   <!-- spirng depends-on 表示在一个bean实例化之前先实例化另一个bean
   <bean id="beanOne" class="ExampleBean" depends-on="manager,accountDao">
 <property name="manager" ref="manager" />
@@ -113,4 +120,11 @@ is thrown.
 <bean id="manager" class="ManagerBean" />
 <bean id="accountDao" class="x.y.jdbc.JdbcAccountDao" />
    -->
+   
+   <!-- 懒加载  lazy-init
+   <bean id="lazy" class="com.foo.ExpensiveToCreateBean" lazy-init="true"/>
+<bean name="not.lazy" class="com.foo.AnotherBean"/>
+    <beans default-lazy-init="true">
+</beans>
+    -->
 </beans>
