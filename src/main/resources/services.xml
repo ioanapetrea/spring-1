@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -37,15 +38,16 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<!-- 通过setter方法注入 方法二-->
 	<property name="accountDao">
 		<!-- <ref/> 
-		ref有三个属性：local、parent、bean，具体区别如下：（官方文档上给出三个，实际上在本配置文件中local不可使用，推荐使用bean属性）
+		ref有三个属性：local、parent、bean，具体区别如下：（官方文档上给出三个，实际上在本配置文件中local在4.0版本之后不可使用，推荐使用bean属性）
 	local只能指定与当前配置的对象在同一个配置文件的对象定义的名称；
 	parent则只能指定位于当前容器的父容器中定义的对象引用；
 	bean则基本上通吃，所以，通吃情况下，直接使用bean来指定对象引用就可以了。
 		 -->
 		<ref  bean="accountDao"/>
 	</property>
+	<!-- <list/>, <set/>, <map/>, and <props/>这些标签的引入查看4.3.5官方文档的85页 -->
 </bean>
-<!-- P标签的用法 
+<!-- P标签的用法 针对<property/>标签的一个简写
 <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 <property name="url" value="jdbc:mysql://localhost:3306/mydb"/>
@@ -58,7 +60,21 @@ destroy-method="close"
 p:driverClassName="com.mysql.jdbc.Driver"
 p:url="jdbc:mysql://localhost:3306/mydb"
 p:username="root"
-p:password="root"/>-->
+p:password="root"/>
+
+
+<bean name="john-classic" class="com.example.Person">
+<property name="name" value="John Doe"/>
+<property name="spouse" ref="jane"/>
+</bean>
+<bean name="john-modern"
+class="com.example.Person"
+p:name="John Doe"
+p:spouse-ref="jane"/>
+<bean name="jane" class="com.example.Person">
+<property name="name" value="Jane Doe"/>
+</bean>
+-->
 <!-- 另外一种写法 采用 java.util.Properties-->
 <bean id="mappings"
 class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -70,4 +86,31 @@ jdbc.url=jdbc:mysql://localhost:3306/mydb
 </value>
 </property>
 </bean>
+<!-- c-namespace 是针对<constructor-arg/>标签的一个简写
+<bean id="bar" class="x.y.Bar"/>
+<bean id="foo" class="x.y.Foo">
+<constructor-arg ref="bar"/>
+<constructor-arg ref="baz"/>
+<constructor-arg value="foo@bar.com"/>
+</bean>
+
+<bean id="foo" class="x.y.Foo" c:bar-ref="bar" c:baz-ref="baz" c:email="foo@bar.com"/>
+ -->
+ <!-- 嵌套属性
+ <bean id="foo" class="foo.Bar">
+<property name="fred.bob.sammy" value="123" />
+</bean>
+解释：
+The foo bean has a fred property, which has a bob property, which has a sammy property, and that final
+sammy property is being set to the value 123. In order for this to work, the fred property of foo, and the
+bob property of fred must not be null after the bean is constructed, or a NullPointerException
+is thrown.
+  -->
+  <!-- spirng depends-on 表示在一个bean实例化之前先实例化另一个bean
+  <bean id="beanOne" class="ExampleBean" depends-on="manager,accountDao">
+<property name="manager" ref="manager" />
+</bean>
+<bean id="manager" class="ManagerBean" />
+<bean id="accountDao" class="x.y.jdbc.JdbcAccountDao" />
+   -->
 </beans>
